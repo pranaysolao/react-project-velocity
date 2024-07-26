@@ -21,7 +21,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-import { NULL } from 'sass';
+import { CategoriesComponent } from '../categories/categoryComponent';
 
 const drawerWidth = 240;
 
@@ -69,29 +69,31 @@ export function PagesComponent() {
                     {/* {['Dashboard', 'Categories', 'Product', 'order', 'User'].map((text, index) => ( */}
 
                     {[{ id: 1, title: "Dashboard", route: "dashboard", Icon: <AppsIcon />, iscollapseable: true, childs: [{ id: 6, title: "Dashboard", route: "dashboard", Icon: <AppsIcon />, }] },
-                    { id: 2, title: "Categories", route: "categories", Icon: <AssignmentReturnedIcon />, iscollapseable: true, childs: [{ id: 6, title: "Dashboard", route: "dashboard", Icon: <AppsIcon />, }] },
+                    { id: 2, title: "Categories", route: "categories", Icon: <AssignmentReturnedIcon />, iscollapseable: true, childs: [
+                        { id: 5, title: "Main_categories", route: "categories/maincategory", Icon: <AssignmentReturnedIcon />, },
+                        { id: 6, title: "sub-categories", route: "categories/subcategory", Icon: <AssignmentReturnedIcon />, }
+                    ] },
                     {
                         id: 3, title: "Product", route: "product", Icon: <InboxIcon />, iscollapseable: true, childs: [
-                            { id: 6, title: "Dashboard", route: "dashboard", Icon: <AppsIcon />, },
-                            { id: 5, title: "Categories", route: "categories", Icon: <AssignmentReturnedIcon />, },
+                            { id: 7, title: "Dashboard", route: "dashboard", Icon: <AppsIcon />, },
+                            { id: 8, title: "Categories", route: "categories/sub-categories", Icon: <AssignmentReturnedIcon />, },
                         ]
                     },
                     { id: 4, title: "Order", route: "order", Icon: <InboxIcon />, },
-                    { id: 5, title: "user", route: "user", Icon: <InboxIcon />, },
+                    { id: 9, title: "user", route: "user", Icon: <InboxIcon />, },
 
                     ].map((obj, index) => (
                         <React.Fragment key={obj.title}>
                             <ListItemButton onClick={() => {
                                 navigate(obj.route)
+                                if(obj.iscollapseable){
+                                    setMenuOpen(!menuOpen)
+                                }
                             }}>
                                 <ListItemIcon>
                                     {obj.Icon}
                                 </ListItemIcon>
-                                <ListItemText primary={obj.title} onClick={() => {
-                                    if (obj.iscollapseable) {
-                                        setMenuOpen(!menuOpen)
-                                    }
-                                }} />
+                                <ListItemText primary={obj.title} />
 
                                 {obj.iscollapseable && <>
                                     {menuOpen ? <ExpandLess /> : <ExpandMore />}
@@ -103,14 +105,13 @@ export function PagesComponent() {
                                     <List component="div" >
                                         {
                                             obj.childs.map(child => {
-                                                return <>
-                                                    <ListItemButton sx={{ pl: 4 }}>
+                                                return <ListItemButton sx={{ pl: 4 }} onClick={()=>navigate(child.route)}>
                                                         <ListItemIcon>
                                                             {child.Icon}
                                                         </ListItemIcon>
                                                         <ListItemText primary={child.title} />
                                                     </ListItemButton>
-                                                </>
+                                               
                                             })
                                         }
                                     </List>
@@ -128,7 +129,7 @@ export function PagesComponent() {
                     <Routes>
                         <Route path='/' element={<Navigate to={"dashboard"} replace={true}></Navigate>}></Route>
                         <Route path='dashboard' element={<div>Dashboard123</div>}></Route>
-                        <Route path='categories' element={<div>Categories</div>}></Route>
+                        <Route path='categories/*' element={<CategoriesComponent />}></Route>
                         <Route path='product' element={<div>product</div>}></Route>
                         <Route path='order' element={<div>order</div>}></Route>
                         <Route path='user' element={<div>User </div>}></Route>
