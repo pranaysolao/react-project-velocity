@@ -8,10 +8,11 @@ import { CreateSubCategory } from "./sub-categories/createsubCategory";
 export function CategoriesComponent(){
     return (
         <div>
+            
             <Routes>
-                <Route path='/' element={<Navigate to={"maincategory"} replace={true} />}></Route>
-                <Route path="maincategory" element={<MainCategoryList />}> </Route>
-                <Route path="maincategory/create" element={<CreateMainCategory />}/>
+                <Route path='/' element={<Navigate to={"mainCategory"} replace={true} />}></Route>
+                <Route path="mainCategory" element={<MainCategoryList />}> </Route>
+                <Route path="mainCategory/create" element={<CreateMainCategory />}/>
                 <Route path="subcategory" element={<CategorySub />}></Route>
                 <Route path="subcategory/create" element={<CreateSubCategory />}/>
             </Routes>
